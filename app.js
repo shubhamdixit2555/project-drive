@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const connectToDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const favicon = require('serve-favicon');
 
 
 // Load environment variables before connecting to the database
@@ -13,6 +14,9 @@ connectToDB();
 
 const app = express();
 
+// Serve favicon
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+
 // Set up middleware to serve static files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,7 +24,6 @@ app.set('view engine', 'ejs');
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use('/', indexRouter)
 app.use('/user', userRouter);
 
