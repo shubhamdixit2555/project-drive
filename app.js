@@ -4,12 +4,17 @@ const indexRouter = require('./routes/index.routes');
 const dotenv = require('dotenv');
 const connectToDB = require('./config/db');
 const cookieParser = require('cookie-parser');
+const path = require('path');
+
 
 // Load environment variables before connecting to the database
 dotenv.config();
 connectToDB();
 
 const app = express();
+
+// Set up middleware to serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'ejs');
 app.use(cookieParser())
